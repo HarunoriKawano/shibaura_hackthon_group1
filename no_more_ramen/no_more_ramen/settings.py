@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'account',
-    'ramen'
+    'ramen',
 ]
 
 MIDDLEWARE = [
@@ -178,5 +178,9 @@ DATABASES = {
     'PASSWORD': 'yxUJTtR3gYmJ',
     'HOST': 'db',
     'PORT': '3308',
-  }
+  },
+#   'split':{
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#   }
 }
