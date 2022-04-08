@@ -13,7 +13,7 @@ type Props = {
 
 const Ranking = (props: Props) => {
     const history = useHistory();
-    props.setHeight("667px");
+    props.setHeight("auto");
 
     const back = () => {
         history.push("/top");

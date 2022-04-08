@@ -53,7 +53,7 @@ const Setting = (props: Props) => {
     defaultValues: {
         sex: sex,
         icon_id: icon_id,
-        mail_delivery: send_report,
+        send_report: send_report,
     }
   });
 
@@ -78,7 +78,7 @@ const Setting = (props: Props) => {
 
   const handleOnSubmit: SubmitHandler<UpdataUser> = async (values) => {
     values.sex = sex;
-    if (send_report !== undefined) values.mail_delivery = send_report;
+    if (send_report !== undefined) values.send_report = send_report;
     values.icon_id = icon_id;
     console.log(values);
 
@@ -112,8 +112,9 @@ const Setting = (props: Props) => {
 
   const logout = () => {
       const body = {
-        token: localStorage.getItem("token")
+        refresh_token: localStorage.getItem("token")
       }
+      console.log(body);
       fetch(`${apiUrl}/account/login/refresh/`, {
         method: 'POST',
         mode: 'cors',
@@ -125,6 +126,7 @@ const Setting = (props: Props) => {
         },
         body: JSON.stringify(body),
       }).then((res) => {
+        localStorage.removeItem("token");
         history.push("/usersetup");
       }).catch((err: Error) => {
           console.log(err);

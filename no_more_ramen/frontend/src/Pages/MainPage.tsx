@@ -133,17 +133,35 @@ const MainPage = (props: Props) => {
   const [point, setPoint] = useState(0);
 
   
-  /*let displayPoint = 0;
+  let displayPoint = 0;
   useEffect(() => {
     console.log(userParamData.index);
     let countId = setInterval(() => {
       if (displayPoint < userParamData.index) {
-        displayPoint = displayPoint + 1;
+        displayPoint = displayPoint + 100;
         console.log(displayPoint);
         console.log(point);
         setPoint(displayPoint);
       } else {
         clearInterval(countId);
+      }
+    }, 0.1);
+  }, []);
+
+  /*let displayParam = {
+    km: 0,
+    hour: 0,
+    lism: 0,
+  };
+  const [km, setKm] = useState(0);
+  useEffect(() => {
+    console.log(userParamData.index);
+    let kmId = setInterval(() => {
+      if (displayParam.km < userParamData.run) {
+        displayParam.km = displayParam.km + 1;
+        setKm(displayParam.km);
+      } else {
+        clearInterval(kmId);
       }
     }, 0.1);
   }, []);*/
@@ -157,7 +175,7 @@ const MainPage = (props: Props) => {
             <Noodle />
         </NoodleIcon>
         <Message>あなたのラーメン指数</Message>
-        <Index color={colorState[nowColor]}>{userParamData.index}</Index>
+        <Index color={colorState[nowColor]}>{point}</Index>
         <Comment>{comment}</Comment>
         <Parameters state={nowColor} color={colorState[nowColor]} value='13' parameter={userParamData} />
         {isCalender && <Calender color={colorState[nowColor]} calender={calender} />}

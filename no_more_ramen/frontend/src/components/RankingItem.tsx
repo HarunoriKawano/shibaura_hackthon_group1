@@ -14,7 +14,7 @@ const RankingItem = (props: Props) => {
   useEffect(() => {
       console.log("read");
       switch (true) {
-        case props.score > 6000:
+        case props.score >= 6000 && props.score < 15000:
             setColor('#FFC400');
             break;
         case props.score > 15000:
