@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+import dj_database_url
+import django_heroku
 
 DEBUG = False
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'account',
-    'ramen_record'
+    'ramen_record',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'no_more_ramen.urls'
@@ -157,9 +161,8 @@ SIMPLE_JWT = {
 # CORSの設定
 # すべて許可
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
+    "https://no-more-ramen.herokuapp.com",
 ]
-CORS_ALLOW_ALL_ORIGINS = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -174,6 +177,7 @@ EMAIL_HOST_USER = 'nikkii.official126@gmail.com'
 EMAIL_HOST_PASSWORD = 'retjgevawkvyjlbs'
 EMAIL_USE_TLS = True
 
+"""
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.mysql',
@@ -184,3 +188,31 @@ DATABASES = {
     'PORT': '3308',
   }
 }
+"""
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler'
+        },
+    },
+    'loggers': {
+        '': {  # 'catch all' loggers by referencing it with the empty string
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+}
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Activate Django-Heroku.
+django_heroku.settings(locals())
